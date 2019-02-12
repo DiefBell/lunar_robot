@@ -27,11 +27,10 @@ PAGE = """\
 
 class StreamingOutput(object):
 	def __init__(self):
-		self.frame = None
+		self.frame = []
 		self.cam_num = 0
 		self.buffer = io.BytesIO()
 		self.condition = threading.Condition()
-		self.setCamCond = threading.Condition()
 
 	def write(self, buf):
 		if buf.startswith(b'\xff\xd8'):
@@ -39,26 +38,21 @@ class StreamingOutput(object):
 			# clients it's available
 			self.buffer.truncate()
 			with self.condition:
-				self.frame = self.buffer.getvalue()
+				self.frame[cam_num] = self.buffer.getvalue()
 				self.condition.notify_all()
 			self.buffer.seek(0)
 		return self.buffer.write(buf)
 
 	def nextCam(numCams):
-		with self.setCamCond:
-			self.cam_num += 1
-			if self.cam_num >= numCams:
-				self.cam_num = 0
-			print(self.cam_num)
-			self.setCamCond.notify_all()
+		self.cam_num += 1
+		if self.cam_num >= numCams:
+			self.cam_num = 0
+		print(self.cam_num)
 
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
 	def do_GET(self):
-		with output.setCamCond:
-			output.setCamCond.wait()
-			cam_num = output.cam_num
-			splitPath = self.path.split('.')
+		splitPath = self.path.split('.')
 		if self.path == '/':
 			self.send_response(301)
 			self.send_header('Location', '/index.html')
@@ -70,7 +64,8 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
 			self.send_header('Content-Length', len(content))
 			self.end_headers()
 			self.wfile.write(content)
-		elif self.splitPath[0] == '/stream' and int(self.splitPath[1]) == self.cam_num and self.splitPath[2] == 'mjpg' :	
+		elif self.splitPath[0] == '/stream' and self.splitPath[2] == 'mjpg' :
+			print("Getting pic")
 			self.send_response(200)
 			self.send_header('Age', 0)
 			self.send_header('Cache-Control', 'no-cache, private')
@@ -81,7 +76,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
 				while True:
 					with output.condition:
 						output.condition.wait()
-						frame = output.frame
+						frame = output.frame[int(self.splitPath[1])]
 					self.wfile.write(b'--FRAME\r\n')
 					self.send_header('Content-Type', 'image/jpeg')
 					self.send_header('Content-Length', len(frame))
