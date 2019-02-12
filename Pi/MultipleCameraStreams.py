@@ -9,7 +9,7 @@ import socketserver
 import threading
 from http import server
 import time
-
+import _thread
 
 PAGE = """\
 <html>
@@ -108,7 +108,7 @@ with picamera.PiCamera(resolution='1280x720', framerate=25) as camera:
 	#Uncomment the next line to change your Pi's Camera rotation (in degrees)
 	#camera.rotation = 90
 	camera.start_recording(output, format='mjpeg')
-	thread.start_new_thread(AlternateCams, (4,) )
+	_thread.start_new_thread(AlternateCams, (4,) )
 	try:
 		address = ('', 8000)
 		server = StreamingServer(address, StreamingHandler)
