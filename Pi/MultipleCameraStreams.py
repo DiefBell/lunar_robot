@@ -30,22 +30,19 @@ PAGE="""\
 
 
 
-### MAIN CODE ###
-camera = { picamera.PiCamera(resolution='1280x720', framerate=24), picamera.PiCamera(resolution='1280x720', framerate=24), picamera.PiCamera(resolution='1280x720', framerate=24), picamera.PiCamera(resolution='1280x720', framerate=24) }
-output = { StreamingOutput(), StreamingOutput(), StreamingOutput(), StreamingOutput() }
-#Uncomment the next line to change your Pi's Camera rotation (in degrees)
-#camera.rotation = 90
-
-for i in range(3):
-	camera[i].start_recording(output[i], format='mjpeg', splitter_port=i)
-
-try:
-    address = ('', 8000)
-    server = StreamingServer(address, StreamingHandler)
-    server.serve_forever()
-finally:
-    camera.stop_recording()
-
+### MAIN CODE ###	
+with picamera.PiCamera(resolution='1280x720', framerate=24) as camera:
+    output = { StreamingOutput(), StreamingOutput(), StreamingOutput(), StreamingOutput() }
+    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
+    #camera.rotation = 90
+    for i in range(3):
+		camera.start_recording(output[i], format='mjpeg', splitter_port=i)
+    try:
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        server.serve_forever()
+    finally:
+        camera.stop_recording()
 	
 	
 	
