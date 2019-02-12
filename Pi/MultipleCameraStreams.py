@@ -28,24 +28,6 @@ PAGE="""\
 """
 
 
-
-
-### MAIN CODE ###	
-with picamera.PiCamera(resolution='1280x720', framerate=24) as camera:
-    output = { StreamingOutput(), StreamingOutput(), StreamingOutput(), StreamingOutput() }
-    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-    #camera.rotation = 90
-    for i in range(3):
-		camera.start_recording(output[i], format='mjpeg', splitter_port=i)
-    try:
-        address = ('', 8000)
-        server = StreamingServer(address, StreamingHandler)
-        server.serve_forever()
-    finally:
-        camera.stop_recording()
-	
-	
-	
 	
 ### CLASSES ###
 class StreamingOutput(object):
@@ -78,8 +60,8 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_header('Content-Length', len(content))
             self.end_headers()
             self.wfile.write(content)
-        elif self.path.split('.')[0] == '/stream' && self.path.split('.')[2] == 'mjpg' && int(self.path.split('.')[1]):
-			cam_num = int(self.path.split('.')[1])
+        elif self.path.split('.')[0] == '/stream' and self.path.split('.')[2] == 'mjpg' and int(self.path.split('.')[1]):
+            cam_num = int(self.path.split('.')[1])
             self.send_response(200)
             self.send_header('Age', 0)
             self.send_header('Cache-Control', 'no-cache, private')
@@ -108,3 +90,19 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
 class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
+
+
+
+### MAIN CODE ###	
+with picamera.PiCamera(resolution='1280x720', framerate=24) as camera:
+    output = { StreamingOutput(), StreamingOutput(), StreamingOutput(), StreamingOutput() }
+    #Uncomment the next line to change your Pi's Camera rotation (in degrees)
+    #camera.rotation = 90
+    for i in range(3):
+        camera.start_recording(output[i], format='mjpeg', splitter_port=i)
+    try:
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        server.serve_forever()
+    finally:
+        camera.stop_recording()
