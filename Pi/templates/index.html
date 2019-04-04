@@ -1,16 +1,19 @@
 <!doctype html>
 <html>
 	<head>
-		<link rel=stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-		<script  src="https://code.jquery.com/jquery-3.3.1.min.js"
-				 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-				 crossorigin="anonymous"></script>
-		<script type=text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+		<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
 	</head>
-	<body>
+	<body><center>
 		<h1>The Woodwasp</h1>
 		<h2>Bio-Inspired ISRU Lunar Rover</h2>
-		<center><img src="//192.168.0.68:8000/stream.mjpg" width="1280" height="960"></center>
-		<h4>Time: {{ time }}</h4>
-	</body>
+		<img src="//80.5.35.122:8000/stream.mjpg" width="1280" height="960">
+		<h4 id="time">Time: {{ time }}</h4>
+		<div id="keylog"></div>
+	</center></body>
 </html>
