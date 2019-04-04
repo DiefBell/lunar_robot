@@ -24,7 +24,7 @@ UserInput =\
 @app.route("/")
 def index():
     t = datetime.now()
-    return render_template('index.html', time=t)
+    return render_template('index.html', time=t, host=host)
 
 
 @app.route("/update", methods=['POST'])
