@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
+import socket
 
 app = Flask(__name__)
+host = socket.gethostbyname(socket.gethostname())
 
 InputMap =\
 {
@@ -35,4 +37,5 @@ def update():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    print("Host: %s" % host)
+    app.run(host=host, port=5000, debug=False)

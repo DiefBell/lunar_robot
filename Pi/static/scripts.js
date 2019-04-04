@@ -1,9 +1,9 @@
-var keys = {};
-
 $(document).ready(function() {
     console.log("READY  BOIS");
     setTimeout(update, 1000);
 });
+
+var keys = {};
 
 $(document).keydown(function (e) {
     keys[e.which] = true;
@@ -30,10 +30,10 @@ function update() {
         type : "post",
         data : keys,
         success: function(data) {
-            $("#time").html(data.time]);
+            $("#time").html(data.time);
         },
         complete: function() {
             setTimeout(update, 1000);
         }
-    });
+});
 }
