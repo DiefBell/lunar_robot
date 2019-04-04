@@ -3,7 +3,8 @@ from datetime import datetime
 import socket
 
 app = Flask(__name__)
-host = socket.gethostbyname(socket.gethostname())
+#host = socket.gethostbyname(socket.gethostname())
+host = '192.168.0.68'  # need to get this automagically
 
 InputMap =\
 {
