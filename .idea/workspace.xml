@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="119effcf-db3f-4901-8feb-02f9c518dd59" name="Default Changelist" comment="" />
+    <list default="true" id="119effcf-db3f-4901-8feb-02f9c518dd59" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pi/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pi/Main.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +16,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Pi/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="12" selection-start-column="12" selection-end-column="12" />
+            <state relative-caret-position="585">
+              <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#58#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -23,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/Pi/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="75" lean-forward="true" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
+              <caret line="15" column="75" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -41,7 +47,7 @@
         <entry file="file://$PROJECT_DIR$/Pi/static/scripts.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="476">
-              <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
+              <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -62,8 +68,8 @@
       <list>
         <option value="$PROJECT_DIR$/Pi/static/styles.css" />
         <option value="$PROJECT_DIR$/Pi/static/scripts.js" />
-        <option value="$PROJECT_DIR$/Pi/Main.py" />
         <option value="$PROJECT_DIR$/Pi/templates/index.html" />
+        <option value="$PROJECT_DIR$/Pi/Main.py" />
       </list>
     </option>
   </component>
@@ -80,6 +86,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -108,7 +115,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -190,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554416908789</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added the favicon and JQuery to the repo">
+      <created>1554417384683</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1554417384683</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -204,6 +217,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1713" y="0" width="1734" height="1407" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2004717" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -268,7 +282,8 @@
     <MESSAGE value="Added PyCharm project config files, as well as a bit more  HTML :)" />
     <MESSAGE value="Added favicon, downloaded JQuery (it's still not working in an external file...)" />
     <MESSAGE value="Can now send keypresses to the flask server and receive data and display on the webpage (atm it's just the time)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Can now send keypresses to the flask server and receive data and display on the webpage (atm it's just the time)" />
+    <MESSAGE value="Added the favicon and JQuery to the repo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the favicon and JQuery to the repo" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Pi/static/scritps.js" />
@@ -280,6 +295,23 @@
     <entry file="file://$PROJECT_DIR$/Pi/static/favicon.ico">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/Pi/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pi/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="75" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Pi/static/styles.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -290,21 +322,7 @@
     <entry file="file://$PROJECT_DIR$/Pi/static/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
-          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pi/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="75" lean-forward="true" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pi/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
+          <caret line="28" column="24" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
         </state>
       </provider>
     </entry>

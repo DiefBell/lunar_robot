@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
-import socket
+#import socket
+import smbus
+
+bus = smbus.SMBus(1)
+addrArduino = 0x60
 
 app = Flask(__name__)
 #host = socket.gethostbyname(socket.gethostname())
@@ -32,6 +36,13 @@ def update():
     global UserInput
     UserInput = request.form
     print(UserInput)
+
+    if UserInput["38"] == 'true':
+        bus.write_byte_data(addrArduino, 0, 5)
+    elif UserInput["40"] == 'true':
+        bus.write_byte_data(addrArduino, 0, -5)
+    else:
+        bus.write_byte_data(addrArduino, 0, 0)
 
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
