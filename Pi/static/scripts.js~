@@ -33,7 +33,7 @@ function update() {
             $("#time").html(data.time);
         },
         complete: function() {
-            setTimeout(update, 1500);
+            setTimeout(update, 500);
         }
 });
 }

@@ -1,14 +1,16 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 #import socket
-import smbus
+from smbus2 import SMBusWrapper 
 
-bus = smbus.SMBus(1)
+
 addrArduino = 0x60
 
 app = Flask(__name__)
 #host = socket.gethostbyname(socket.gethostname())
 host = '192.168.0.68'  # need to get this automagically
+
+data = []
 
 InputMap =\
 {
@@ -19,10 +21,10 @@ InputMap =\
 }
 UserInput =\
 {
-    "37" : False,  # left
-    "38" : False,  # fwd
-    "39" : False,  # right
-    "40" : False  # back
+    '37' : 'false',  # left
+    '38' : 'false',  # fwd
+    '39' : 'false',  # right
+    '40' : 'false'  # back
 }
 
 @app.route("/")
@@ -34,16 +36,26 @@ def index():
 @app.route("/update", methods=['POST'])
 def update():
     global UserInput
+    global data
     UserInput = request.form
     print(UserInput)
 
-    if UserInput["38"] == 'true':
-        bus.write_byte_data(addrArduino, 0, 5)
-    elif UserInput["40"] == 'true':
-        bus.write_byte_data(addrArduino, 0, -5)
-    else:
-        bus.write_byte_data(addrArduino, 0, 0)
-
+    for k in UserInput:
+        print("%s = %s" % (k, UserInput[k]))
+    
+    #if UserInput['38'] == 'true':
+        #data = [5, 1, 2, 3]
+        #print("Moving forwards...")
+    #if UserInput['40'] == 'true':
+        #data = [6, 1, 2, 3]
+        #print("Moving backwards...")
+    #else:
+    data = [7, 1, 2, 3]
+    print("data = [0, 1, 2, 3]")
+    
+    with SMBusWrapper(1) as bus:
+        bus.write_i2c_block_data(addrArduino, 0, data)
+    
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
 
