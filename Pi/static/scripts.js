@@ -1,6 +1,6 @@
 $(document).ready(function() {
     console.log("READY  BOIS");
-    setTimeout(update, 1500);
+    setTimeout(update, 200);
 });
 
 var keys = {};
@@ -33,7 +33,7 @@ function update() {
             $("#time").html(data.time);
         },
         complete: function() {
-            setTimeout(update, 1500);
+            setTimeout(update, 200);
         }
 });
 }

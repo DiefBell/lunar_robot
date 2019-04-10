@@ -21,10 +21,6 @@ InputMap =\
 }
 UserInput =\
 {
-    '37' : 'false',  # left
-    '38' : 'false',  # fwd
-    '39' : 'false',  # right
-    '40' : 'false'  # back
 }
 
 @app.route("/")
@@ -37,21 +33,17 @@ def index():
 def update():
     global UserInput
     global data
-    UserInput = request.form
+    UserInput = request.form.to_dict()
     print(UserInput)
 
-    for k in UserInput:
-        print("%s = %s" % (k, UserInput[k]))
+    userInput = UserInput.keys()
     
-    #if UserInput['38'] == 'true':
-        #data = [5, 1, 2, 3]
-        #print("Moving forwards...")
-    #if UserInput['40'] == 'true':
-        #data = [6, 1, 2, 3]
-        #print("Moving backwards...")
-    #else:
-    data = [7, 1, 2, 3]
-    print("data = [0, 1, 2, 3]")
+    if InputMap["forward"] in userInput:
+        data = [15, 1, 2, 3]
+    elif InputMap["back"] in userInput:
+        data = [-15, 1, 2, 3]
+    else:
+        data = [0, 1, 2, 3]
     
     with SMBusWrapper(1) as bus:
         bus.write_i2c_block_data(addrArduino, 0, data)
