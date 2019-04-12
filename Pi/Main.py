@@ -52,6 +52,6 @@ def update():
     return jsonify({ 'result' : 'success', 'time' : t })
 
 
-if __name__ == "__main__":
-    print("Host: %s" % host)
-    app.run(host=host, port=5000, debug=False)
+#if __name__ == "__main__":
+print("Host: %s" % host)
+app.run(host=host, port=5000, debug=False)
