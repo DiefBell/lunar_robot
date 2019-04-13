@@ -80,4 +80,4 @@ def update():
 
 #if __name__ == "__main__":
 print("Host: %s" % host)
-app.run(host="192.168.0.50", port=5000, debug=True)
+app.run(host=host, port=5000, debug=True)
