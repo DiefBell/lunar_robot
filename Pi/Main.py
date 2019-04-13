@@ -66,10 +66,10 @@ def update():
     print(UserInput)
 
     cmd = [0, 0, 0, 0]
-    if UserInput["DPAD_UP"] == 1 or UserInput["LEFT_STICK_Y"] == 1: cmd = [SPEED, SPEED, 0, 0]
-    elif UserInput["DPAD_DOWN"] == 1 or UserInput["LEFT_STICK_Y"] == 2: cmd = [-SPEED, -SPEED, 0, 0]
+    if UserInput["DPAD_UP"] == 1 or UserInput["LEFT_STICK_Y"] == -1: cmd = [SPEED, SPEED, 0, 0]
+    elif UserInput["DPAD_DOWN"] == 1 or UserInput["LEFT_STICK_Y"] == 1: cmd = [-SPEED, -SPEED, 0, 0]
     elif UserInput["DPAD_RIGHT"] == 1 or UserInput["LEFT_STICK_X"] == 1: cmd = [SPEED, -SPEED, 0, 0]
-    elif UserInput["DPAD_LEFT"] == 1 or UserInput["LEFT_STICK_X"] == 2: cmd = [-SPEED, SPEED, 0, 0]
+    elif UserInput["DPAD_LEFT"] == 1 or UserInput["LEFT_STICK_X"] == -1: cmd = [-SPEED, SPEED, 0, 0]
     
     with SMBusWrapper(1) as bus:
         bus.write_i2c_block_data(addrArduino, drill, cmd)
@@ -80,4 +80,4 @@ def update():
 
 #if __name__ == "__main__":
 print("Host: %s" % host)
-app.run(host=host, port=5000, debug=True)
+app.run(host=host, port=5000, debug=False)
