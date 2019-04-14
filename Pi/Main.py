@@ -11,9 +11,9 @@ app = Flask(__name__)
 host = '192.168.0.68'  # need to get this automagically
 
 sensors = []
-drill = 0;
+drill = 0
 
-SPEED = 5
+SPEED = 10
 
 UserInput =\
 {
@@ -53,26 +53,26 @@ def update():
     global drill
     global SPEED
 
-    gamepad = request.form.to_dict()
-    #print(gamepad)
-
-    if gamepad["START_FORWARD"] == 1 and UserInput["START_FORWARD"] == 0:  # when the start button is pressed, but ignores holds
-        if drill == 0: drill = 1
-        else: drill = 0
-    for k, v in gamepad.items():
-        if float(v) > 0: UserInput[k] = 1
-        elif float(v) < 0: UserInput[k] = -1
-        else: UserInput[k] = 0
-    print(UserInput)
-
-    cmd = [0, 0, 0, 0]
-    if UserInput["DPAD_UP"] == 1 or UserInput["LEFT_STICK_Y"] == -1: cmd = [SPEED, SPEED, 0, 0]
-    elif UserInput["DPAD_DOWN"] == 1 or UserInput["LEFT_STICK_Y"] == 1: cmd = [-SPEED, -SPEED, 0, 0]
-    elif UserInput["DPAD_RIGHT"] == 1 or UserInput["LEFT_STICK_X"] == 1: cmd = [SPEED, -SPEED, 0, 0]
-    elif UserInput["DPAD_LEFT"] == 1 or UserInput["LEFT_STICK_X"] == -1: cmd = [-SPEED, SPEED, 0, 0]
+    gamepad = {}
+    for k,v in request.form.to_dict().items():
+        if float(v) > 0: gamepad[k] = 1
+        elif float(v) < 0: gamepad[k] = -1
+        else: gamepad[k] = 0
+    if gamepad != UserInput:  # i.e. something has changed
+        if gamepad["START_FORWARD"] == 1 and UserInput["START_FORWARD"] == 0:  # when the start button is pressed, but ignores holds
+            if drill == 0: drill = 1
+            else: drill = 0
+        
+        cmd = [0, 0, 0, 0]
+        if gamepad["DPAD_UP"] == 1 or gamepad["LEFT_STICK_Y"] == -1: cmd = [SPEED, SPEED, 0, 0]
+        elif gamepad["DPAD_DOWN"] == 1 or gamepad["LEFT_STICK_Y"] == 1: cmd = [-SPEED, -SPEED, 0, 0]
+        elif gamepad["DPAD_RIGHT"] == 1 or gamepad["LEFT_STICK_X"] == 1: cmd = [SPEED, -SPEED, 0, 0]
+        elif gamepad["DPAD_LEFT"] == 1 or gamepad["LEFT_STICK_X"] == -1: cmd = [-SPEED, SPEED, 0, 0]
     
-    with SMBusWrapper(1) as bus:
-        bus.write_i2c_block_data(addrArduino, drill, cmd)
+        with SMBusWrapper(1) as bus:
+            bus.write_i2c_block_data(addrArduino, drill, cmd)
+
+        UserInput = gamepad
 
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
