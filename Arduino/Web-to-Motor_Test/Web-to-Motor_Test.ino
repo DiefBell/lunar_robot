@@ -10,13 +10,15 @@ const double MICROSTEP_RATIO = 1.0 / MICROSTEP_SETTING;
 
 float rpm = 0;
 
+int receiveBuffer[5] = {0, 0, 0, 0, 0};
+
 void setup()
 {
   Wire.begin(addrArduino);  // join I2C bus with address 0x60
   Wire.onReceive(eOnReceive);
   Serial.begin(115200);
 
-  Serial.print("IT IS BEGUN");
+  //Serial.println("IT IS BEGUN");
 
   pinMode(PIN_DIR, OUTPUT);
   pinMode(PIN_STEP, OUTPUT);
@@ -28,7 +30,7 @@ void loop()
 {
   if (rpm < 0) digitalWrite(PIN_DIR, HIGH);
   else digitalWrite(PIN_DIR, LOW);
-
+  
   if (rpm != 0)
   {
     digitalWrite(PIN_STEP, HIGH);
@@ -40,16 +42,19 @@ void loop()
 
 void eOnReceive(int numBytes)
 {
-  Serial.println("Number of bytes received: " + numBytes);
-  
-  int input = 0;
-  while(0 < Wire.available() )
-  {
-    input = Wire.read();
-  }
+  Serial.print("\n[Receiving Command]\nNumber of bytes received: "); Serial.println(numBytes);
+  int count = 0;
 
-  Serial.println("Input RPM: " + input);
-  rpm = input;
+  while(Wire.available() )
+  {
+    receiveBuffer[count] = Wire.read();
+    Serial.print("  =>"); Serial.println(receiveBuffer[count++]);
+  }
+  rpm = receiveBuffer[1];
+  if (rpm > 127) rpm -= 256;
+  
+  if(receiveBuffer[0] == 1) Serial.println("  Using the drill!");
+  else Serial.println("  Moving!");
 }
 
 int rpm2delayms(float rpm)
