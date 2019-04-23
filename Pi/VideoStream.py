@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # Web streaming example
 # Source code from the official PiCamera package
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
@@ -89,7 +91,7 @@ with picamera.PiCamera(resolution='1280x720', framerate=24) as camera:
     #camera.rotation = 90
     camera.start_recording(output, format='mjpeg')
     try:
-        address = ('', 8000)
+        address = ('', 5001)
         server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
     finally:

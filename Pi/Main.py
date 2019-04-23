@@ -1,6 +1,9 @@
+#!/usr/bin/python3
+
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 #import socket
+import smbus2
 from smbus2 import SMBusWrapper
 
 
@@ -8,7 +11,7 @@ addrArduino = 0x60
 
 app = Flask(__name__)
 #host = socket.gethostbyname(socket.gethostname())
-host = '192.168.0.68'  # need to get this automagically
+host = '10.14.174.55'  # need to get this automagically
 
 sensors = []
 drill = 0
