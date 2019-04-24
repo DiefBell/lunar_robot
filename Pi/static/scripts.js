@@ -21,7 +21,8 @@ var userInput = {
     LEFT_STICK_X: 0,
     LEFT_STICK_Y: 0,
     RIGHT_STICK_X: 0,
-    RIGHT_STICK_Y: 0
+    RIGHT_STICK_Y: 0,
+    RPM: 1
 }
 
 $(document).ready(function(){
@@ -62,6 +63,7 @@ $(document).ready(function(){
 });
 
 function update(){
+    userInput["RPM"] = $('#rpm').val();
     $.ajax({
         url: "/update",
         type: "post",
