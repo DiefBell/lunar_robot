@@ -1,17 +1,22 @@
+#!/usr/bin/python3
+
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 #import socket
-#from smbus2 import SMBusWrapper
+import smbus2
+from smbus2 import SMBusWrapper
 
 
 addrArduino = 0x60
 
 app = Flask(__name__)
 #host = socket.gethostbyname(socket.gethostname())
-host = '192.168.0.68'  # need to get this automagically
+host = '10.14.174.55'  # need to get this automagically
 
 sensors = []
 drill = 0
+
+SPEED = 10
 
 UserInput =\
 {
@@ -35,8 +40,7 @@ UserInput =\
     "LEFT_STICK_X" : 0,
     "LEFT_STICK_Y" : 0,
     "RIGHT_STICK_X" : 0,
-    "RIGHT_STICK_Y" : 0,
-    "RPM" : 1
+    "RIGHT_STICK_Y" : 0
 }
 
 @app.route("/")
@@ -50,30 +54,28 @@ def update():
     global UserInput
     global sensors
     global drill
+    global SPEED
 
-    userInput = {}
+    gamepad = {}
     for k,v in request.form.to_dict().items():
-        if k == "RPM": userInput[k] = v
-        elif float(v) > 0: userInput[k] = 1
-        elif float(v) < 0: userInput[k] = -1
-        else: userInput[k] = 0
-    if userInput != UserInput:  # i.e. something has changed
-        if userInput["START_FORWARD"] == 1 and UserInput["START_FORWARD"] == 0:  # when the start button is pressed, but ignores holds
+        if float(v) > 0: gamepad[k] = 1
+        elif float(v) < 0: gamepad[k] = -1
+        else: gamepad[k] = 0
+    if gamepad != UserInput:  # i.e. something has changed
+        if gamepad["START_FORWARD"] == 1 and UserInput["START_FORWARD"] == 0:  # when the start button is pressed, but ignores holds
             if drill == 0: drill = 1
             else: drill = 0
-
-        speed = userInput["RPM"]
+        
         cmd = [0, 0, 0, 0]
-        if userInput["DPAD_UP"] == 1 or userInput["LEFT_STICK_Y"] == -1: cmd = [speed, speed, 0, 0]
-        elif userInput["DPAD_DOWN"] == 1 or userInput["LEFT_STICK_Y"] == 1: cmd = [-speed, -speed, 0, 0]
-        elif userInput["DPAD_RIGHT"] == 1 or userInput["LEFT_STICK_X"] == 1: cmd = [speed, -speed, 0, 0]
-        elif userInput["DPAD_LEFT"] == 1 or userInput["LEFT_STICK_X"] == -1: cmd = [-speed, speed, 0, 0]
-    '''
+        if gamepad["DPAD_UP"] == 1 or gamepad["LEFT_STICK_Y"] == -1: cmd = [SPEED, SPEED, 0, 0]
+        elif gamepad["DPAD_DOWN"] == 1 or gamepad["LEFT_STICK_Y"] == 1: cmd = [-SPEED, -SPEED, 0, 0]
+        elif gamepad["DPAD_RIGHT"] == 1 or gamepad["LEFT_STICK_X"] == 1: cmd = [SPEED, -SPEED, 0, 0]
+        elif gamepad["DPAD_LEFT"] == 1 or gamepad["LEFT_STICK_X"] == -1: cmd = [-SPEED, SPEED, 0, 0]
+    
         with SMBusWrapper(1) as bus:
             bus.write_i2c_block_data(addrArduino, drill, cmd)
 
-        UserInput = userInput
-    '''
+        UserInput = gamepad
 
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
@@ -81,4 +83,4 @@ def update():
 
 #if __name__ == "__main__":
 print("Host: %s" % host)
-app.run(host="192.168.0.50", port=5000, debug=True)
+app.run(host=host, port=5000, debug=False)
