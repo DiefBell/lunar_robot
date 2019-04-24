@@ -1,45 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="119effcf-db3f-4901-8feb-02f9c518dd59" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Arduino/Main/Main.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/TimerCompatTest/TimerCompatTest.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/examples/NewPing15SensorsTimer/NewPing15SensorsTimer.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/examples/NewPing3Sensors/NewPing3Sensors.pde" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/examples/NewPingEventTimer/NewPingEventTimer.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/examples/NewPingExample/NewPingExample.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/examples/NewPingTimerMedian/NewPingTimerMedian.pde" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/examples/TimerExample/TimerExample.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/keywords.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/library.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/src/NewPing.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing/src/NewPing.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewPing_v1.9.1.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/NewTone_v1.0.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/examples/Knob/Knob.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/examples/Sweep/Sweep.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/keywords.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/library.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/src/Servo2.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/src/Servo2.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Servo2/src/ServoTimers.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/Tone.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/Tone.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/changelog.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/examples/DTMFTest/DTMFTest.pde" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/examples/RTTTL/RTTTL.pde" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/examples/ToneTest/ToneTest.pde" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/keywords.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/library.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arduino/libraries/Tone-1.0.0/license.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pi/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pi/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pi/static/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/Pi/static/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pi/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Pi/templates/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="119effcf-db3f-4901-8feb-02f9c518dd59" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +14,7 @@
         <entry file="file://$PROJECT_DIR$/Pi/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="400">
-              <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-end-line="21" />
+              <caret line="20" column="30" selection-start-line="20" selection-end-line="21" />
             </state>
           </provider>
         </entry>
@@ -60,7 +22,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pi/static/scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="700">
+            <state relative-caret-position="1300">
               <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
             </state>
           </provider>
@@ -69,10 +31,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Pi/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
+            <state relative-caret-position="299">
+              <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
               <folding>
-                <element signature="e#0#58#0" expanded="true" />
+                <element signature="e#20#78#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,7 +86,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -153,6 +114,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -288,7 +250,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1713" y="0" width="1734" height="1407" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13915095" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -301,7 +262,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32967034" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32967034" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.14678179" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.14678179" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005896" side_tool="true" weight="0.3320251" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32967034" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -388,23 +349,23 @@
     <entry file="file://$PROJECT_DIR$/Pi/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
-          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-end-line="21" />
+          <caret line="20" column="30" selection-start-line="20" selection-end-line="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pi/static/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="700">
+        <state relative-caret-position="1300">
           <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pi/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
+        <state relative-caret-position="299">
+          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
           <folding>
-            <element signature="e#0#58#0" expanded="true" />
+            <element signature="e#20#78#0" expanded="true" />
           </folding>
         </state>
       </provider>
