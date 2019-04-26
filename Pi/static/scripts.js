@@ -1,29 +1,24 @@
 var updateInterval = 100;
 
+var keys = {
+    37 : false,
+    38 : false,
+    39 : false,
+    40: false
+};
+
 var userInput = {
-    FACE_1: 0,
-    FACE_2: 0,
-    FACE_3: 0,
-    FACE_4: 0,
-    LEFT_TOP_SHOULDER: 0,
-    RIGHT_TOP_SHOULDER: 0,
-    LEFT_BOTTOM_SHOULDER: 0,
-    RIGHT_BOTTOM_SHOULDER: 0,
-    SELECT_BACK: 0,
-    START_FORWARD: 0,
-    LEFT_STICK: 0,
-    RIGHT_STICK: 0,
-    DPAD_UP: 0,
-    DPAD_DOWN: 0,
-    DPAD_LEFT: 0,
-    DPAD_RIGHT: 0,
-    HOME: 0,
-    LEFT_STICK_X: 0,
-    LEFT_STICK_Y: 0,
-    RIGHT_STICK_X: 0,
-    RIGHT_STICK_Y: 0,
-    RPM: 1
-}
+    MODE : 0,
+    FWD: 0,
+    TURN: 0,
+
+    FL: 0,
+    FR: 0,
+    BL: 0,
+    BR: 0,
+
+    RPM: 0
+};
 
 $(document).ready(function(){
     window.gamepad = new Gamepad();
@@ -46,11 +41,16 @@ $(document).ready(function(){
             gamepad = gamepads[i];
             if(gamepad)
             {
-                for (control in gamepad.state)
-                {
-                    userInput[control] = gamepad.state[control];
-                    //console.log(gamepad.state[control]);
-                }
+                if(gamepad.state["LEFT_STICK_Y"] < 0 || keys[38]) userInput["FWD"] = 1;
+                else if(gamepad.state["LEFT_STICK_Y"] > 0 || keys[40]) userInput["FWD"] = -1;
+                else userInput["FWD"] = 0;
+
+                if(gamepad.state["LEFT_STICK_X"] > 0 || keys[39]) userInput["TURN"] = 1;
+                else if(gamepad.state["LEFT_STICK_X"] < 0 || keys[37]) userInput["TURN"] = 1;
+                else userInput["FWD"] = 0;
+
+                if(gamepad.state["START_FORWARD"]) userInput["MODE"] = 1;
+                else userInput["mode"] = 0;
             }
         }
     });
@@ -64,26 +64,26 @@ $(document).ready(function(){
 
 function update(){
     userInput["RPM"] = $('#rpm').val();
+    userInput["FL"] = $('#fl_target').val();
+    userInput["FR"] = $('#fr_target').val();
+    userInput["BL"] = $('#bl_target').val();
+    userInput["BR"] = $('#br_target').val();
     $.ajax({
         url: "/update",
         type: "post",
         data: userInput,
         success: function(data){
-            $("#time").html(data.time);
+            $('#time').html(data.time);
+            $('#fl_val').html(data.fl);
+            $('#fr_val').html(data.fr);
+            $('#bl_val').html(data.bl);
+            $('#br_val').html(data.br);
         },
         complete: function() {
             setTimeout(update, updateInterval);
         }
     });
 }
-
-/*
-$(document).ready(function() {
-    console.log("READY  BOIS");
-    setTimeout(update, 200);
-});
-
-var keys = {};
 
 $(document).keydown(function (e) {
     keys[e.which] = true;
@@ -103,17 +103,3 @@ function printKeys() {
     }
     $("#keylog").html(html);
 }
-
-function update() {
-    $.ajax({
-        url : "/update",
-        type : "post",
-        data : keys,
-        success: function(data) {
-            $("#time").html(data.time);
-        },
-        complete: function() {
-            setTimeout(update, 200);
-        }
-});
-}*/
