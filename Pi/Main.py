@@ -13,10 +13,12 @@ host = '10.14.174.55'  # need to get this automagically
 #host = '192.168.0.68'
 
 drill = 0
+toggleMotors = 1
 
 PrevUserInput =\
 {
     "MODE" : 0,
+    "TOGGLE" : 0,
     "FWD" : 0,
     "TURN" : 0,
 
@@ -25,7 +27,10 @@ PrevUserInput =\
     "BL" : 0,
     "BR" : 0,
 
-    "RPM" : 0
+    "RPM" : 0,
+
+    "DEF_S_CAR" : 90, # default servo positions
+    "DEF_S_COL" : 90
 }
 
 @app.route("/")
@@ -38,6 +43,7 @@ def index():
 def update():
     global PrevUserInput
     global drill
+    global toggleMotors
 
     ui = request.form.to_dict()
     for k,v in ui.items():
@@ -50,27 +56,29 @@ def update():
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed
             if drill == 1: drill = 0
             else: drill = 1
-        cmd  = [ 0, 0, 0, 0, ui["FL"], ui["FR"], ui["BL"], ui["BR"] ]
+        if ui["TOGGLE"] == 1 and PrevUserInput["TOGGLE"] == 0: # select button pressed
+            if toggleMotors == 1: toggleMotors = 0
+            else: toggleMotors = 1
+        cmd  = [ 0, # motor speed
+                 0, 0, # motor directions
+                 ui["FL"], ui["FR"], ui["BL"], ui["BR"], # USRF limits
+                 ui["DEF_S_CAR"], ui["DEF_S_COL"] ] # servo positions
         if ui["FWD"] == 1:
             cmd[0] = ui["RPM"]
-            cmd[1] = ui["RPM"]
-            cmd[2] = 1
-            cmd[3] = 1
+            cmd[1] = toggleMotors
+            cmd[2] = toggleMotors
         elif ui["FWD"] == -1:
             cmd[0] = ui["RPM"]
-            cmd[1] = ui["RPM"]
+            cmd[1] = 0
             cmd[2] = 0
-            cmd[3] = 0
         elif ui["TURN"] == 1:
             cmd[0] = ui["RPM"]
-            cmd[1] = ui["RPM"]
-            cmd[2] = 1
-            cmd[3] = 0
+            cmd[1] = toggleMotors
+            cmd[2] = 0
         elif ui["TURN"] == -1:
             cmd[0] = ui["RPM"]
-            cmd[1] = ui["RPM"]
-            cmd[2] = 0
-            cmd[3] = 1
+            cmd[1] = 0
+            cmd[2] = toggleMotors
 
         PrevUserInput = ui
 

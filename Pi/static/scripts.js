@@ -9,6 +9,7 @@ var keys = {
 
 var userInput = {
     MODE : 0,
+    TOGGLE: 0,
     FWD: 0,
     TURN: 0,
 
@@ -17,7 +18,10 @@ var userInput = {
     BL: 0,
     BR: 0,
 
-    RPM: 0
+    RPM: 0,
+
+    DEF_S_CAR: 90,
+    DEF_S_COL: 90
 };
 
 $(document).ready(function(){
@@ -69,6 +73,9 @@ $(document).ready(function(){
 
                 if(gamepad.state["START_FORWARD"] == 1) userInput["MODE"] = 1;
                 else userInput["MODE"] = 0;
+
+                if(gamepad.state["SELECT_BACK"] == 1) userInput["TOGGLE"] = 1;
+                else userInput["TOGGLE"] = 0;
             }
         }
     });
@@ -87,6 +94,8 @@ function update(){
     userInput["FR"] = $('#fr_target').val();
     userInput["BL"] = $('#bl_target').val();
     userInput["BR"] = $('#br_target').val();
+    userInput["DEF_S_CAR"] = $('#servo_carousel').val();
+    userInput["DEF_S_COL"] = $('#servo_collector').val();
     //console.log(userInput);
     $.ajax({
         url: "/update",
