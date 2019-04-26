@@ -47,13 +47,27 @@ def update():
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed
             if drill == 1: drill = 0
             else: drill = 1
-        cmd  = [ ui["RPM"], ui["RPM"], 0, 0, ui["FL"], ui["FR"], ui["BL"], ui["BR"] ]
-        if ui["FWD"] != 0:
-            cmd[2] = ui["FWD"]
-            cmd[3] = ui["FWD"]
-        elif ui["TURN"] != 0:
-            cmd[2] = ui["TURN"]
-            cmd[3] = ui["TURN"]*-1
+        cmd  = [ 0, 0, 0, 0, ui["FL"], ui["FR"], ui["BL"], ui["BR"] ]
+        if ui["FWD"] == 1:
+            cmd[0] = ui["RPM"]
+            cmd[1] = ui["RPM"]
+            cmd[2] = 1
+            cmd[3] = 1
+        elif ui["FWD"] == -1:
+            cmd[0] = ui["RPM"]
+            cmd[1] = ui["RPM"]
+            cmd[2] = 0
+            cmd[3] = 0
+        elif ui["TURN"] == 1:
+            cmd[0] = ui["RPM"]
+            cmd[1] = ui["RPM"]
+            cmd[2] = 1
+            cmd[3] = 0
+        elif ui["TURN"] == -1:
+            cmd[0] = ui["RPM"]
+            cmd[1] = ui["RPM"]
+            cmd[2] = 0
+            cmd[3] = 1
 
         PrevUserInput = ui
 
