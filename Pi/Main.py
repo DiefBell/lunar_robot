@@ -40,24 +40,27 @@ def update():
     global drill
 
     ui = request.form.to_dict()
+    for k,v in ui.items():
+        ui[k] = int(v)
+    #print(ui)
     if ui != PrevUserInput: # i.e. something has changed
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed
             drill = not drill
 
         if(drill): mode = 1
         else: mode = 0
-        cmd  = [ ui["RPM"], ui["RPM"], 0, 0, ui["fl"], ui["fr"], ui["bl"], ui["br"] ]
+        cmd  = [ ui["RPM"], ui["RPM"], 0, 0, ui["FL"], ui["FR"], ui["BL"], ui["BR"] ]
         if ui["FWD"] != 0:
             cmd[2] = ui["FWD"]
             cmd[3] = ui["FWD"]
-        elif ui["TURN"] != 0
+        elif ui["TURN"] != 0:
             cmd[2] = ui["TURN"]
             cmd[3] = ui["TURN"]*-1
 
         PrevUserInput = ui
 
         with SMBusWrapper(1) as bus:
-            bus.write_i2c_block_data(addrArduino, drill, cmd)
+            bus.write_i2c_block_data(addrArduino, mode, cmd)
 
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
