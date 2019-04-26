@@ -23,10 +23,10 @@ var userInput = {
 $(document).ready(function(){
     window.gamepad = new Gamepad();
     window.gamepad.bind(Gamepad.Event.CONNECTED, function(device){
-        console.log('Connected', device);
+        //console.log('Connected', device);
     });
     window.gamepad.bind(Gamepad.Event.DISCONNECTED, function(device){
-        console.log('Disconnected', device);
+        //console.log('Disconnected', device);
     });
     window.gamepad.bind(Gamepad.Event.TICK, function(gamepads){
         var gamepad,
@@ -41,19 +41,38 @@ $(document).ready(function(){
             gamepad = gamepads[i];
             if(gamepad)
             {
-                if(gamepad.state["LEFT_STICK_Y"] < 0 || keys[38]) userInput["FWD"] = 1;
-                else if(gamepad.state["LEFT_STICK_Y"] > 0 || keys[40]) userInput["FWD"] = -1;
-                else userInput["FWD"] = 0;
+                if(gamepad.state["LEFT_STICK_Y"] < -0.1 || keys[38])
+                {
+                    userInput["FWD"] = 1;
+                }
+                else if(gamepad.state["LEFT_STICK_Y"] > 0.1 || keys[40])
+                {
+                    userInput["FWD"] = -1;
+                }
+                else
+                {
+                    userInput["FWD"] = 0;
+                }
 
-                if(gamepad.state["LEFT_STICK_X"] > 0 || keys[39]) userInput["TURN"] = 1;
-                else if(gamepad.state["LEFT_STICK_X"] < 0 || keys[37]) userInput["TURN"] = 1;
-                else userInput["FWD"] = 0;
+                if(gamepad.state["LEFT_STICK_X"] > 0.1 || keys[39])
+                {
+                    userInput["TURN"] = 1;
+                }
+                else if(gamepad.state["LEFT_STICK_X"] < -0.1 || keys[37])
+                {
+                    userInput["TURN"] = -1;
+                }
+                else
+                {
+                    userInput["TURN"] = 0;
+                }
 
-                if(gamepad.state["START_FORWARD"]) userInput["MODE"] = 1;
-                else userInput["mode"] = 0;
+                if(gamepad.state["START_FORWARD"] == 1) userInput["MODE"] = 1;
+                else userInput["MODE"] = 0;
             }
         }
     });
+    
     if(!window.gamepad.init() )
     {
         console.log("Gamepads not supported by current browser...");
@@ -68,6 +87,7 @@ function update(){
     userInput["FR"] = $('#fr_target').val();
     userInput["BL"] = $('#bl_target').val();
     userInput["BR"] = $('#br_target').val();
+    //console.log(userInput);
     $.ajax({
         url: "/update",
         type: "post",

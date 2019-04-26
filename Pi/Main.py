@@ -9,10 +9,10 @@ addrArduino = 0x60
 
 app = Flask(__name__)
 #host = socket.gethostbyname(socket.gethostname())
-#host = '10.14.174.55'  # need to get this automagically
-host = '192.168.0.68'
+host = '10.14.174.55'  # need to get this automagically
+#host = '192.168.0.68'
 
-drill = False
+drill = 0
 
 PrevUserInput =\
 {
@@ -41,14 +41,12 @@ def update():
 
     ui = request.form.to_dict()
     for k,v in ui.items():
-        ui[k] = int(v)
+        ui[k] = int(float(v) )
     #print(ui)
     if ui != PrevUserInput: # i.e. something has changed
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed
-            drill = not drill
-
-        if(drill): mode = 1
-        else: mode = 0
+            if drill == 1: drill = 0
+            else: drill = 1
         cmd  = [ ui["RPM"], ui["RPM"], 0, 0, ui["FL"], ui["FR"], ui["BL"], ui["BR"] ]
         if ui["FWD"] != 0:
             cmd[2] = ui["FWD"]
@@ -60,7 +58,7 @@ def update():
         PrevUserInput = ui
 
         with SMBusWrapper(1) as bus:
-            bus.write_i2c_block_data(addrArduino, mode, cmd)
+            bus.write_i2c_block_data(addrArduino, drill, cmd)
 
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
