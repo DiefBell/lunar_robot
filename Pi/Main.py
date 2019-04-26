@@ -41,7 +41,10 @@ def update():
 
     ui = request.form.to_dict()
     for k,v in ui.items():
-        ui[k] = int(float(v) )
+        if k == "RPM":
+            ui[k] = int(10 * float(v))
+        else:
+            ui[k] = int(v)
     #print(ui)
     if ui != PrevUserInput: # i.e. something has changed
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed

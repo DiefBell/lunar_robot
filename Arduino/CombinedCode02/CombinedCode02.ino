@@ -72,11 +72,11 @@ void eReceive(int numBytes)  // need to shrink this down so it runs faster
 #endif
     count++;
   }
-  if (i2c_buffer[B_RPM_L] > 0 && i2c_buffer[B_RPM_R] > 0)
+  if (i2c_buffer[B_RPM_L] > 0 && i2c_buffer[B_RPM_R] > 0 && i2c_buffer[B_MOVE] == 1)
   {
     digitalWrite(PIN_DIR_LEFT, i2c_buffer[B_DIR_L]);
     digitalWrite(PIN_DIR_RIGHT, i2c_buffer[B_DIR_R]);
-    setMotorSpeeds(i2c_buffer[B_RPM_L]);  // same RPM for both motors atm
+    setMotorSpeeds(i2c_buffer[B_RPM_L] / 10.0);  // same RPM for both motors atm
 #ifdef DEBUG
     Serial.print("Microseconds per step: "); Serial.print(usPerHalfStep * 2.0); Serial.println("us\n");
 #endif
