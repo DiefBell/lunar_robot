@@ -1,14 +1,27 @@
 #define DEBUG
 
+/*I2C INCLUDES AND VARIABLES */
 #include <Wire.h>
 #define ADDR_SLAVE 0x60
+#define B_MOVE 0  // byte for moving
+#define B_RPM_L 1  // rpm of left motor
+#define B_RPM_R 2
+#define B_DIR_L 3  // direction of left motor
+#define B_DIR_R 4
+#define B_USRF_FL 5  // byte for the limit of the FL ultrasonic sensor
+#define B_USFR_FR 6
+#define B_USFR_BL 7
+#define B_USFR_BR 8
+int i2c_buffer[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+/* PIN DEFINITIONS */
 #define PIN_DIR_LEFT 4
 #define PIN_STEP_LEFT 5
 #define PIN_STEP_RIGHT 6
 #define PIN_DIR_RIGHT 7
 
 float usPerHalfStep = 0;  // TEMPORARY FOR TESTING
+const bool FLIP = false;  // temporary - will eventually put onto the RPi side of things
 
 /*--- MAIN FUNCTIONS ---*/
 void setup()
@@ -35,6 +48,8 @@ void loop()
 {
   if (usPerHalfStep > 0)
   {
+    digitalWrite(PIN_DIR_LEFT, i2c_buffer[B_DIR_L]^FLIP);
+    digitalWrite(PIN_DIR_LEFT, !i2c_buffer[B_DIR_R]^FLIP);
     digitalWrite(PIN_STEP_LEFT, LOW);
     digitalWrite(PIN_STEP_RIGHT, LOW);
     delayMicroseconds(usPerHalfStep);
@@ -46,17 +61,6 @@ void loop()
 
 
 /*--- I2C INTERRUPTS ---*/
-#define B_MOVE 0  // byte for moving
-#define B_RPM_L 1  // rpm of left motor
-#define B_RPM_R 2
-#define B_DIR_L 3  // direction of left motor
-#define B_DIR_R 4
-#define B_USRF_FL 5  // byte for the limit of the FL ultrasonic sensor
-#define B_USFR_FR 6
-#define B_USFR_BL 7
-#define B_USFR_BR 8
-int i2c_buffer[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-
 void eReceive(int numBytes)  // need to shrink this down so it runs faster
 {
 #ifdef DEBUG
@@ -104,6 +108,7 @@ const uint64_t usPerMin = 60 * 1000000;
 void setMotorSpeeds(float rpm)
 {
   usPerHalfStep = MICROSTEP_RATIO * STEP_ANGLE * usPerMin / (rpm * 360.0);
+  
 }
 /*--- ULTRASONIC FUNCTIONS ---*/
 
