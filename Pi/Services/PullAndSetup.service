@@ -1,0 +1,11 @@
+[Unit]
+Description=Service to run some setup stuff and pull the git repo on startup
+After=network.target
+
+[Service]
+type=oneshot
+WorkingDirectory=/home/lunar_robot/Pi/Services
+ExecStart= /usr/bin/python3 /home/lunar_robot/Pi/Service/PullAndSetup.py
+
+[Install]
+WantedBy=multi-user.target
