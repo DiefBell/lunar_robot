@@ -9,7 +9,7 @@ addrArduino = 0x60
 
 app = Flask(__name__)
 #host = socket.gethostbyname(socket.gethostname())
-host = '10.14.174.55'  # need to get this automagically
+host = '10.14.173.224'  # need to get this automagically
 #host = '192.168.0.68'
 
 drill = 0
