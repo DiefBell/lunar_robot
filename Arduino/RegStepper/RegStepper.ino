@@ -14,7 +14,7 @@ uint16_t usPerStep(float stepAngle, int microstep, float rpm)
 #define P_DIR_LEFT 4
 #define P_STEP_RIGHT 6
 #define P_DIR_RIGHT 7
-#define MICROSTEP_LOCO 16
+#define MICROSTEP_LOCO 32
 const float GEARBOX_RATIO = 99 + (1044.0 / 2057);
 const float STEP_ANGLE_LOCO = 1.8 / GEARBOX_RATIO;
 #define RPM_LOCO 20
@@ -46,6 +46,9 @@ void setup()
   Serial.print("\tOCR3A: "); Serial.println(OCR3A);
   Serial.print("Microseconds per drill step: "); Serial.println(usPerStep(STEP_ANGLE_DRILL, MICROSTEP_DRILL, RPM_DRILL));
   Serial.print("\tOCR3B: "); Serial.println(OCR3B);
+
+  pinMode(P_DIR_LEFT, OUTPUT); digitalWrite(P_DIR_LEFT, HIGH);
+  pinMode(P_DIR_RIGHT, OUTPUT); digitalWrite(P_DIR_RIGHT, LOW);
 
   TCNT3 = 0; // reset timer 3 to zero
 }
