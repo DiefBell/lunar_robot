@@ -15,7 +15,7 @@ app = Flask(__name__)
 host = '10.14.173.224'  # need to get this automagically
 #host = '192.168.0.68'
 
-t_prevArduinoUpdate = millis
+t_prevArduinoUpdate = 0
 
 mode = 0
 toggleMotors = 1
@@ -60,7 +60,8 @@ def update():
         else:
             ui[k] = int(v)
     #print(ui)
-    if ui != PrevUserInput or t_prevArduinoUpdate - millis > arduinoUpdateInterval: # i.e. something has changed
+    # or t_prevArduinoUpdate - millis > arduinoUpdateInterval
+    if ui != PrevUserInput: # i.e. something has changed
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed
             if mode == 1: mode = 0
             else: mode = 1

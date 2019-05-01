@@ -122,6 +122,8 @@ void setup()
   // attach servos
   sCarousel.attach(PIN_S_CAR);
   sCollector.attach(PIN_S_COL);
+  sCarousel.write(90);  // test position
+  sCollector.write(90);  // test position
   
   // set up serial debugging
   #ifdef DEBUG

@@ -47,8 +47,8 @@ void setup()
   Serial.print("Microseconds per drill step: "); Serial.println(usPerStep(STEP_ANGLE_DRILL, MICROSTEP_DRILL, RPM_DRILL));
   Serial.print("\tOCR3B: "); Serial.println(OCR3B);
 
-  pinMode(P_DIR_LEFT, OUTPUT); digitalWrite(P_DIR_LEFT, HIGH);
-  pinMode(P_DIR_RIGHT, OUTPUT); digitalWrite(P_DIR_RIGHT, LOW);
+  pinMode(P_DIR_LEFT, OUTPUT); digitalWrite(P_DIR_LEFT, LOW);
+  pinMode(P_DIR_RIGHT, OUTPUT); digitalWrite(P_DIR_RIGHT, HIGH);
 
   TCNT3 = 0; // reset timer 3 to zero
 }
