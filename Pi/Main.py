@@ -3,6 +3,9 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 from smbus2 import SMBusWrapper
+import time
+
+millis = lambda: int(round(time.time() * 1000))
 
 
 addrArduino = 0x60
@@ -12,7 +15,9 @@ app = Flask(__name__)
 host = '10.14.173.224'  # need to get this automagically
 #host = '192.168.0.68'
 
-drill = 0
+t_prevArduinoUpdate = millis
+
+mode = 0
 toggleMotors = 1
 
 PrevUserInput =\
@@ -42,8 +47,11 @@ def index():
 @app.route("/update", methods=['POST'])
 def update():
     global PrevUserInput
-    global drill
+    global mode
     global toggleMotors
+    global t_prevArduinoUpdate
+
+    arduinoUpdateInterval = 400 # maximum of 400ms between updates to the Arduino
 
     ui = request.form.to_dict()
     for k,v in ui.items():
@@ -52,38 +60,41 @@ def update():
         else:
             ui[k] = int(v)
     #print(ui)
-    if ui != PrevUserInput: # i.e. something has changed
+    if ui != PrevUserInput or t_prevArduinoUpdate - millis > arduinoUpdateInterval: # i.e. something has changed
         if ui["MODE"] == 1 and PrevUserInput["MODE"] == 0: # start button pressed
-            if drill == 1: drill = 0
-            else: drill = 1
+            if mode == 1: mode = 0
+            else: mode = 1
         if ui["TOGGLE"] == 1 and PrevUserInput["TOGGLE"] == 0: # select button pressed
             if toggleMotors == 1: toggleMotors = 0
             else: toggleMotors = 1
         cmd  = [ 0, # motor speed
-                 0, 0, # motor directions
-                 ui["FL"], ui["FR"], ui["BL"], ui["BR"], # USRF limits
-                 ui["DEF_S_CAR"], ui["DEF_S_COL"] ] # servo positions
-        if ui["FWD"] == 1:
-            cmd[0] = ui["RPM"]
-            cmd[1] = toggleMotors
-            cmd[2] = toggleMotors
-        elif ui["FWD"] == -1:
-            cmd[0] = ui["RPM"]
-            cmd[1] = 0
-            cmd[2] = 0
-        elif ui["TURN"] == 1:
-            cmd[0] = ui["RPM"]
-            cmd[1] = toggleMotors
-            cmd[2] = 0
-        elif ui["TURN"] == -1:
-            cmd[0] = ui["RPM"]
-            cmd[1] = 0
-            cmd[2] = toggleMotors
+                 0, 0, # motor directions or servo positions
+                 ui["FL"], ui["FR"], ui["BL"], ui["BR"] ] # USRF limits
+        if mode == 1:
+            if ui["FWD"] == 1:
+                cmd[0] = ui["RPM"]
+                cmd[1] = toggleMotors
+                cmd[2] = toggleMotors
+            elif ui["FWD"] == -1:
+                cmd[0] = ui["RPM"]
+                cmd[1] = 1 - toggleMotors
+                cmd[2] = 1 - toggleMotors
+            elif ui["TURN"] == 1:
+                cmd[0] = ui["RPM"]
+                cmd[1] = toggleMotors
+                cmd[2] = 1 - toggleMotors
+            elif ui["TURN"] == -1:
+                cmd[0] = ui["RPM"]
+                cmd[1] = 1 - toggleMotors
+                cmd[2] = toggleMotors
+        else:
+            cmd[1] = ui["DEF_S_CAR"]
+            cmd[2] = ui["DEF_S_COL"]
 
         PrevUserInput = ui
 
         with SMBusWrapper(1) as bus:
-            bus.write_i2c_block_data(addrArduino, drill, cmd)
+            bus.write_i2c_block_data(addrArduino, mode, cmd)
 
     t = datetime.now()
     return jsonify({ 'result' : 'success', 'time' : t })
