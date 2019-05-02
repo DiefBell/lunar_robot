@@ -1,31 +1,24 @@
-#define NUM_SENSORS 6
+#define NUM_SENSORS 4
 
 #define I_FL 0
-#define PIN_TRIG_FL 11
-#define PIN_ECHO_FL 2
+#define PIN_TRIG_FL 10
+#define PIN_ECHO_FL 18
 
 #define I_FR 1
-#define PIN_TRIG_FR 9
-#define PIN_ECHO_FR 19
+#define PIN_TRIG_FR 13
+#define PIN_ECHO_FR 3
 
-#define I_R 2
-#define PIN_TRIG_R 13
-#define PIN_ECHO_R 3
+#define I_BL 2
+#define PIN_TRIG_BL 9
+#define PIN_ECHO_BL 19
 
 #define I_BR 3
-#define PIN_TRIG_BR 10
-#define PIN_ECHO_BR 18
+#define PIN_TRIG_BR 11
+#define PIN_ECHO_BR 2
 
-#define I_BL 4
-#define PIN_TRIG_BL 22
-#define PIN_ECHO_BL 20
-
-#define I_L 5
-#define PIN_TRIG_L 23
-#define PIN_ECHO_L 21
-
-const int PIN_TRIG[6] = {PIN_TRIG_FL, PIN_TRIG_FR, PIN_TRIG_R, PIN_TRIG_BR, PIN_TRIG_BL, PIN_TRIG_L};
-const int PIN_ECHO[6] = {PIN_ECHO_FL, PIN_ECHO_FR, PIN_ECHO_R, PIN_ECHO_BR, PIN_ECHO_BL, PIN_ECHO_L};
+const int PIN_TRIG[4] = { PIN_TRIG_FL, PIN_TRIG_FR, PIN_TRIG_BR, PIN_TRIG_BL };
+const int PIN_ECHO[4] = { PIN_ECHO_FL, PIN_ECHO_FR, PIN_ECHO_BR, PIN_ECHO_BL };
+const String names[4] = { "Front Left", "Front Right", "Back Left", "Back Right" };
 
 #define US2CM(x) 0.343*x/2
 
@@ -46,10 +39,10 @@ void setup()
   }
   attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_FL]), timeEcho<I_FL>, CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_FR]), timeEcho<I_FR>, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_R]), timeEcho<I_R>, CHANGE);
+  //attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_R]), timeEcho<I_R>, CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_BR]), timeEcho<I_BR>, CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_BL]), timeEcho<I_BL>, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_L]), timeEcho<I_L>, CHANGE);
+  //attachInterrupt(digitalPinToInterrupt(PIN_ECHO[I_L]), timeEcho<I_L>, CHANGE);
 
   Serial.begin(115200);
   Serial.println("Starting...");
@@ -61,7 +54,7 @@ void loop()
   {
     for (int i = 0; i < NUM_SENSORS; i++)  // putting the prints here causes a second of delay between a change and seeing it but it means they print nicer
     {
-      Serial.print("-- Echo on pin ("); Serial.print(PIN_ECHO[i]); Serial.println(")--");
+      Serial.print("-- Sensor at "); Serial.print(names[i]); Serial.println(" --");
       Serial.print("\tDuration: "); Serial.print(duration[i]); Serial.println("us.");
       Serial.print("\tDistance: "); Serial.print(distance[i]); Serial.println("mm.");
     }

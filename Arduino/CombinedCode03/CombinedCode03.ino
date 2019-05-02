@@ -1,6 +1,11 @@
 #include <Wire.h>  // for I2C functionality
 #include <Servo.h>  // for servos (obviously)
 
+#define DEBUG
+#ifdef DEBUG
+  #define DEBUG_SENSORS
+#endif
+
 /***** I2C BUFFER POSITIONS *****/
 //mode, 0=off, 1=move, 2=drill
 #define B_MODE 0
@@ -26,12 +31,15 @@
 #define USRF_BL 2
 #define USRF_BR 3
 
-const int PIN_TRIG[4] = {11, 9, 13, 10};
-const int PIN_ECHO[4] = {2, 19, 3, 18};
+const int PIN_TRIG[4] = {10, 13, 9, 11};
+const int PIN_ECHO[4] = {18, 3, 19, 2};
+#ifdef DEBUG_SENSORS
+  const String SENSOR_NAMES[4] = { "Front Left", "Front Right", "Back Left", "Back Right" };
+#endif
 
 bool usrfStop = false;
 unsigned long t_prevTrigger = 0;
-const int INTERVAL_TRIGGER = 100;  // 100ms
+const int INTERVAL_TRIGGER = 500;  // 100ms
 uint16_t usrf_timer[4] = {0, 0, 0, 0};
 uint16_t usrf_dur[4] = {0, 0, 0, 0};
 int usrf_dist[4] = {0, 0, 0, 0};
@@ -122,8 +130,8 @@ void setup()
   // attach servos
   sCarousel.attach(PIN_S_CAR);
   sCollector.attach(PIN_S_COL);
-  sCarousel.write(90);  // test position
-  sCollector.write(90);  // test position
+  //sCarousel.write(90);  // test position
+  //sCollector.write(90);  // test position
   
   // set up serial debugging
   #ifdef DEBUG
@@ -151,14 +159,46 @@ void loop()
     stopMotors();
   }
 
-  if(t_prevTrigger - millis() > INTERVAL_TRIGGER) triggerSensors();
+  if(millis() - t_prevTrigger > INTERVAL_TRIGGER)
+  {
+    #ifdef DEBUG_SENSORS
+      Serial.println("\n----------");
+      for(int i = 0; i < NUM_SENSORS; i++)
+      {
+        Serial.print("Value of ");
+        Serial.print(SENSOR_NAMES[i]);
+        Serial.print(" sensor: ");
+        Serial.print(usrf_dist[i] );
+        Serial.println("cm.");
+      }
+    #endif
+    triggerSensors();
+  }
 }
 
 /***** I2C INTERRUPTS *****/
 void eReceive(int numBytes)
 {
-  if(numBytes != 8) return;  // command is wrong length!
-  int count = 0;
+  byte b = Wire.read();
+  if(b == 3)
+  {
+    #ifdef DEBUG
+      Serial.print("IP: ");
+    #endif
+    while(Wire.available() )
+    {
+      #ifdef DEBUG
+        Serial.print(Wire.read() ); Serial.print(".");
+      #endif
+    }
+    #ifdef DEBUG
+      Serial.println();
+    #endif
+    return;
+  }
+  ib[B_MODE] = b;
+  
+  int count = 1;
   bool change = false;
   #ifdef DEBUG
     Serial.print("\n[Receiving Command]\nNumber of bytes received: "); Serial.println(numBytes);
@@ -170,7 +210,7 @@ void eReceive(int numBytes)
     if(b != ib[count])
     {
       #ifdef DEBUG
-        Serial.print("  =>"); Serial.println(i2c_buffer[count]);
+        Serial.print("  =>"); Serial.println(ib[count]);
       #endif
       change = true;
     }
@@ -208,7 +248,7 @@ void timeEcho()
   if(digitalRead(PIN_ECHO[I]) == HIGH)usrf_timer[I] = TCNT4;
   else
   {
-    usrf_dur[I] = US_PER_COUNT_4 * (TCNT4 - usrf_timer[I]);
+    usrf_dur[I] = ( usrf_dur[I] + US_PER_COUNT_4 * (TCNT4 - usrf_timer[I] ) ) / 2;  //averages with previous value
     usrf_dist[I] = US2CM(usrf_dur[I] );
   }
 }
