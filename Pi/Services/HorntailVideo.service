@@ -5,7 +5,7 @@ After=PullAndSetup.service
 [Service]
 Type=simple
 WorkingDirectory=/home/pi/lunar_robot/Pi/
-ExecStart= /usr/bin/python3 /home/lunar_robot/Pi/Service/VideoStream.py > /home/lunar_robot/logs/HorntailVideo.log 2>&1
+ExecStart= /usr/bin/python3 /home/pi/lunar_robot/Pi/Service/VideoStream.py > /home/pi/lunar_robot/logs/HorntailVideo.log 2>&1
 
 [Install]
 WantedBy=multi-user.target
