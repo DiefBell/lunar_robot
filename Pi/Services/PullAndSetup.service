@@ -5,7 +5,7 @@ After=network.target
 [Service]
 type=oneshot
 WorkingDirectory=/home/pi/lunar_robot/Pi/
-ExecStart= /usr/bin/python3 /home/lunar_robot/Pi/Service/PullAndSetup.py > /home/lunar_robot/logs/PullAndSetup.log 2>&1
+ExecStart= /usr/bin/python3 /home/pi/lunar_robot/Pi/Service/PullAndSetup.py > /home/pi/lunar_robot/logs/PullAndSetup.log 2>&1
 
 [Install]
 WantedBy=multi-user.target
