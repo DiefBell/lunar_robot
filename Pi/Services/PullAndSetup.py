@@ -8,7 +8,7 @@ pipDL = getoutput("sudo pip3 install smbus2")
 print(pipDL)
 
 os.chdir("/home/pi/lunar_robot/")
-gitReset = getoutput("sudo git reset --HARD")
+gitReset = getoutput("sudo git reset --hard")
 print(gitReset)
 gitPull = getoutput("sudo git pull")
 print(gitPull)
