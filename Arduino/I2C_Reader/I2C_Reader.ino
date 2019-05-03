@@ -14,9 +14,9 @@
 
 void setup() {
   Wire.begin(0x60);                // join i2c bus with address #8
-  //Wire.onReceive(receiveEvent); // register event
+  Wire.onReceive(receiveEvent); // register event
   Serial.begin(115200);           // start serial for output
-  Serial.println("I2C Reader ready!");
+  Serial.println("Starting I2C Reader...");
 }
 
 void loop() {
@@ -27,7 +27,7 @@ void loop() {
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
   while (Wire.available()) { // loop through all but the last
-    int b = Wire.read(); // receive byte as a character
-    Serial.print(b);         // print the character
+    int c = Wire.read(); // receive byte as a character
+    Serial.print(c);         // print the character
   }
 }
