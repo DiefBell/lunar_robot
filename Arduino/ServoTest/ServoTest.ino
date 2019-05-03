@@ -15,7 +15,7 @@ void setup()
 
 void loop()
 {
-  /*carousel.write(NEUTRAL_ANGLE);
+  carousel.write(NEUTRAL_ANGLE);
   delay(2000);
   carousel.write(NEUTRAL_ANGLE + (2*STEP_ANGLE) );
   delay(1000);
@@ -23,6 +23,6 @@ void loop()
   {
     carousel.write(carousel.read()+ STEP_ANGLE);
     delay(1000);
-  }*/
+  }
 
 }
