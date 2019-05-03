@@ -14,7 +14,7 @@
 
 void setup() {
   Wire.begin(0x60);                // join i2c bus with address #8
-  Wire.onReceive(receiveEvent); // register event
+  //Wire.onReceive(receiveEvent); // register event
   Serial.begin(115200);           // start serial for output
   Serial.println("I2C Reader ready!");
 }
